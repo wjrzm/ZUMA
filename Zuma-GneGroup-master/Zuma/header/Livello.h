@@ -1,0 +1,53 @@
+#ifndef LIVELLO_H
+#define LIVELLO_H
+#include "Rana.h"
+#include "GestoreSpari.h"
+#include "Menu.h"
+#include "Suono.h"
+
+enum MODALITA{CLASSICA = 1, MOSSE = 2, TEMPO = 3};
+enum ESITO{TORNAMENU = 1, VAIAVANTI = 2, HAIPERSO = 3};
+const int NUM_LIVELLI = 3;
+//Questa classe crea il livello del gioco in base alle modalità e alla difficoltà
+class Livello : public Schermata
+{
+    private:
+        Menu* menu= nullptr;
+        Serpente* serpy;
+        GestoreSpari* gestoreSpari;
+
+        //numero di palline che popoleranno il 'serpente' in base alla difficoltà
+        int numPalline = 0;
+        
+        //numero dei colori da usare in base alla difficoltà
+        int numColori = 0;
+        
+        //coordinata X della rana
+        int ranax = 0;
+
+        //coordinata Y della rana
+        int ranay = 0;
+        
+        int numero = 0;
+        
+        MODALITA modalita = CLASSICA;
+        int vita = 3;
+        int puntiGioco = 0;
+    
+    protected:
+        void stampaFinale(const bool& vinto, Suono*& music);
+        void datiLivello(const int& m,const int& n);
+        void stampaScrittaPunteggio(const int& p, const double& tempo, const int& numMosse);
+        void endLivello();
+        bool gameOver(const double& tempo=0, const int& numMosse=0);
+    public:
+        Livello();
+        ~Livello();
+        void caricaFont() override;
+        void azzeraPunti();
+        void resetVite();
+        int livello_base(Suono*&, const int& modalita =1 , const int& numero = 1);
+        
+};
+
+#endif
